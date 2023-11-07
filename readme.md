@@ -1,62 +1,46 @@
 # Text To Speech From Wwise
+
 ## Overview
 
-This samples demonstrates how to generate WAV files from a text-to-speech from Wwise directly.
+This sample demonstrates how to generate WAV files using text-to-speech from Wwise directly.
 
 Demonstrates:
 
-- WAAPI [ak.wwise.ui.getSelectedObjects](https://www.audiokinetic.com/library/edge/?source=SDK&id=ak__wwise__ui__getselectedobjects.html)
+- WAAPI [ak.wwise.core.object.get](https://www.audiokinetic.com/library/edge/?source=SDK&id=ak__wwise__core__object__get.html)
 - WAAPI [ak.wwise.core.audio.import](https://www.audiokinetic.com/library/edge/?source=SDK&id=ak__wwise__core__audio__import.html)
-- Text to Speech using Windows Powershell
-- Wwise External Tools
+- Text to Speech using Windows Powershell and SpeechSynthesizer
+- Wwise [Command Add-ons](https://www.audiokinetic.com/fr/library/edge/?source=SDK&id=defining_custom_commands.html)
 
 ## Requirements
 
-1. [Node.js](https://nodejs.org) - Use the LTS version
-1. [git](https://git-scm.com/downloads)
-1. Windows operating system 
-1. Windows Powershell (comes with Windows 10)
+- Wwise 2019.2.x or more recent
+- [Python 3.6 or more recent](https://www.python.org/downloads/)
+- [waapi-client python library](https://pypi.org/project/waapi-client/)
+- Windows 10 and Windows Powershell
 
 ## Setup
 
-It works best with Visual Studio Code. Run the following commands.
+1. Install python 3.6 or more recent
+2. Install python dependencies:
 
-Install dependencies:
+    `py -3 -m pip install waapi-client`
+3. Create the `Add-ons` folder under `%APPDATA%\Audiokinetic\Wwise`
+4. Unzip the git repository under: `%APPDATA%\Audiokinetic\Wwise\Add-ons`
 
-    npm install
+   **Note**: ensure the `Commands` and `waapi-text-to-speech` folders are directly located under the `Add-ons` folder.
 
-Build Typescript:
+5. Restart Wwise or run the command **Command Add-ons/Reload**
 
-    npm run build
+## How to use
 
-## Execution
-
-First, ensure WAAPI is enabled in Wwise:
- - menu **Project/Preferences**
- - Check **Enable Wwise Authoring API**
- - Click **OK**
- - Restart Wwise
-
-Then, open a Wwise Project.
-
-### Adding this script as an external editor
-
-In Wwise:
-1. Open menu: **Project > User Preferences**
-1. In the **External Editors**, click **Add...**
-1. Browse for the `text-to-speech.cmd` file in this directory
-1. Click **OK**
-
-### Executing
-
-1. Create a **Sound Voice** object
-1. Insert text in the **Notes** field
-1. Right-click the **Sound Voice** object, and use the external editor text-to-speech
+1. Create a **Sound SFX** or **Sound Voice** object in the project.
+2. Type some text in the **Notes** field.
+3. Right-click the object, and select **Generate Text-to-Speech**.
 
 ## How it works
 
-The source code is located in [index.ts](index.ts). 
+The source code is located in [main.py](waapi-text-to-speech/main.py).
 
-This script is executed as an external editor in Wwise from the current selection. It will retrieve the selection from WAAPI and generate a WAV file for each selected Sound objects using Windows text to speech. The WAV files will be automatically imported in the project with WAAPI.
+This script is using WAAPI and the Command Add-ons system. It will retrieve the selection from executed command and generate a WAV file for each selected Sound objects using Windows text to speech. The WAV files will be automatically imported in the project with WAAPI.
 
-Refer to this [blog article](https://blog.audiokinetic.com/waapi-three-open-source-projects-for-wwise-authoring-api/) for more information. 
+Refer to this [blog article](https://blog.audiokinetic.com/waapi-three-open-source-projects-for-wwise-authoring-api/) for more information.
